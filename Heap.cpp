@@ -16,9 +16,11 @@ int main() {
 	myData.Add(25);
 	myData.PrintHeap();
 
+	cout << endl;
 	//fix search
 	// test remove 
 	myData.Remove(3);
 	myData.Remove(25);
+	myData.PrintHeap();
 	return 0;
 }

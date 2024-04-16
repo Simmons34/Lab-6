@@ -7,14 +7,6 @@
  * max heap root == max
  */
 
-/*
- * need
- * bool isEmpty()
- * T/void peek()
- * insert(T item)
- * void remove(T item)
- * reHeap
- */
 template <typename T>
 class Heap {
 	private:
@@ -81,21 +73,6 @@ class Heap {
 		}
 
 	private:
-		/*
-		Node* Search(T item) {
-			//return a pointer to the node containing item
-			Node* curr = root;
-			while(curr->data != item) {
-				if (item > curr->data) {
-					return nullptr;
-				} else {
-					if (item > curr->right->data){
-					return curr->right;
-					}
-				}
-			}
-		}
-		*/
 
 		Node* Search(T item) {
 			if (root == nullptr)
@@ -156,21 +133,27 @@ class Heap {
 				}
 				return root;
 			}
-			//find the item in the tree
-			//get the deepest rightmost
-			//replace the item with the deepest item
-			//then delete the deepest rightmost node
-			Node* tmp = Search(item);
-			if (tmp != nullptr) {
-				T lastItem = getLastNode(root)->data;
-				deleteLastNode(root, getLastNode(root));
-				tmp->data = lastItem;
-				return root;
+			
+			std::vector<Node*> nodes;
+			nodes.push_back(root);
+			while (!nodes.empty()) {
+				Node* tmp = nodes.back();
+				nodes.pop_back();
+				if (tmp->data == item) {
+					T lastItem = getLastNode(root)->data;
+					deleteLastNode(root, getLastNode(root));
+					tmp->data = lastItem;
+					return root;
+				}
+
+				if (tmp->left != nullptr) {
+					nodes.push_back(tmp->left);
+				}
+
+				if (tmp->right != nullptr) {
+					nodes.push_back(tmp->right);
+				}
 			}
-			//if (tmp->left != nullptr)
-				//nodes.push_back(tmp->left);
-			//if (tmp->right != nullptr)
-				//nodes.push_back(tmp->right);
 			return root;
 		}
 
